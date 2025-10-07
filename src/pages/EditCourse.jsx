@@ -17,7 +17,7 @@ export default function EditCourse() {
     const fetchCourse = async () => {
       try {
         const res = await api.get(`/courses/${id}`);
-        const c = res.data.data;
+        const c = res.data;
         setFormData({
           title: c.title,
           description: c.description,
