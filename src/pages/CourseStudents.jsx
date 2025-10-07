@@ -45,7 +45,7 @@ export default function CourseStudents() {
               <th className="border p-2">Progress</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="bg-gray-100">
             {students.map((s) => (
               <tr key={s._id}>
                 <td className="border p-2">{s.user?.name}</td>

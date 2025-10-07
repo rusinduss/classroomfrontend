@@ -22,6 +22,18 @@ export default function Courses() {
     };
     fetchCourses();
   }, [search]);
+  const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this course?")) return;
+
+    try {
+      await api.delete(`/courses/${id}`);
+      setCourses(courses.filter((course) => course._id !== id)); // remove from UI
+      alert("Course deleted successfully!");
+    } catch (err) {
+      console.error("Error deleting course", err);
+      alert("Failed to delete course.");
+    }
+  };
 
   if (loading)
     return <p className="text-center mt-10 text-white">Loading...</p>;
@@ -49,7 +61,9 @@ export default function Courses() {
                 className="border border-gray-700 rounded-lg p-4 shadow-lg hover:shadow-xl transition bg-gray-900"
               >
                 <h2 className="text-lg font-semibold">{course.title}</h2>
-                <p className="text-sm text-gray-400 line-clamp-2 mt-1">{course.description}</p>
+                <p className="text-sm text-gray-400 line-clamp-2 mt-1">
+                  {course.description}
+                </p>
 
                 <div className="mt-3">
                   <Link
@@ -62,10 +76,16 @@ export default function Courses() {
 
                 {user && user.role === "instructor" && (
                   <div className="flex gap-2 mt-3">
-                    <button className="bg-yellow-400 px-2 py-1 rounded text-black hover:bg-yellow-500 transition">
+                    <Link
+                      to={`/courses/${course._id}/edit`}
+                      className="bg-yellow-400 px-2 py-1 rounded text-black hover:bg-yellow-500 transition"
+                    >
                       Edit
-                    </button>
-                    <button className="bg-red-500 px-2 py-1 rounded text-white hover:bg-red-600 transition">
+                    </Link>
+                    <button
+                      onClick={() => handleDelete(course._id)}
+                      className="bg-red-500 px-2 py-1 rounded text-white hover:bg-red-600 transition"
+                    >
                       Delete
                     </button>
                   </div>

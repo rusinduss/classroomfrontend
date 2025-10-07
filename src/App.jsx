@@ -10,6 +10,7 @@ import MyEnrollments from "./pages/MyEnrollments";
 import CourseStudents from "./pages/CourseStudents";
 import Recommendations from "./pages/Recommendations";
 import ProtectedRoute from "./components/ProtectedRoute";
+import EditCourse from "./pages/EditCourse";
 
 function App() {
   return (
@@ -30,6 +31,14 @@ function App() {
             element={
               <ProtectedRoute allowedRoles={["instructor", "admin"]}>
                 <AddCourse />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/courses/:id/edit"
+            element={
+              <ProtectedRoute allowedRoles={["instructor"]}>
+                <EditCourse />
               </ProtectedRoute>
             }
           />
